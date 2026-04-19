@@ -1,4 +1,4 @@
-// @name KoreanPornMovie
+// @name KoreanMovie
 // @author nexu
 // @version 1.7.3
 // @description KoreanPornMovie - REST API补全 + TVBox嗅探
