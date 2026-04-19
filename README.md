@@ -1,11 +1,13 @@
 📢 **Info**
-- 适用于 omnibox 2.0 及以上版本。
+- For omnibox 2.0 and later.
 
-📢 **温馨提示**  
-- 所有源均收集自互联网，仅供学习与娱乐。  
-- 源有效期不定，能看多久随缘 😆  
-- 请勿商用，后果自负。  
-- 如果对你有帮助，欢迎 Star ⭐ 支持！
 
-📢 **鸣谢**
+📢 **Course note**  
+- All sources are collected from the Internet and are for learning and entertainment only.  
+- The source is indefinite, how long can I see 😆  
+- Do not commercialize, the consequences are self-indulsion.  
+- If you are helpful, welcome to Star ⭐ support!
+
+
+📢 **Thanks for the
 - [IPTV](https://github.com/kakaxi-1/IPTV)
