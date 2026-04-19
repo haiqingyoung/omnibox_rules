@@ -1,13 +1,11 @@
 📢 **Info**
-- For omnibox 2.0 and later.
+- Applicable to omnibox 2.0 and above.
 
+📢 **Friendly Reminder**  
+- All sources are collected from the internet, for learning and entertainment purposes only.  
+- Source validity period is uncertain — watch as long as fate allows 😆  
+- Not for commercial use. Users bear sole responsibility for any consequences.  
+- If this helps you, a Star ⭐ is appreciated!
 
-📢 **Course note**  
-- All sources are collected from the Internet and are for learning and entertainment only.  
-- The source is indefinite, how long can I see 😆  
-- Do not commercialize, the consequences are self-indulsion.  
-- If you are helpful, welcome to Star ⭐ support!
-
-
-📢 **Thanks for the**
+📢 **Acknowledgments**
 - [IPTV](https://github.com/kakaxi-1/IPTV)
