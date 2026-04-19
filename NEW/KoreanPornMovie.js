@@ -6,8 +6,7 @@
 // 1.7.2: 1) detail() 在 REST API fallback 获取 slug 后重新拉取 slug 页面以提取 mp4；2) extractMp4FromIframeQ 修复 tag= 参数内部嵌套 URL 编码问题。
 // 1.7.1: 修复 mp4 提取链路 — tag= 参数内部还有一层 URL 编码。
 // 1.7.0: 直接在 detail() 提取 player-x.php q 参数并解码出 mp4 直链，play() 返回 parse:0 直链。
-// @downloadURL https://raw.githubusercontent.com/Silent1566/OmniBox-Spider/main/成人/采集/koreanpornmovie.js
-// @indexs 0
+// @downloadURL https://raw.githubusercontent.com/GD2021/omnibox_rules/refs/heads/main/NEW/KoreanPornMovie.js
 
 const OmniBox = require("omnibox_sdk");
 const cheerio = require("cheerio");
