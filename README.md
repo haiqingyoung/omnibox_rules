@@ -9,5 +9,5 @@
 - If you are helpful, welcome to Star ⭐ support!
 
 
-📢 **Thanks for the
+📢 **Thanks for the**
 - [IPTV](https://github.com/kakaxi-1/IPTV)
