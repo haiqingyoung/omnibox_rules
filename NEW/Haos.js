@@ -12,6 +12,7 @@ const crypto = require("crypto");
 const HOST = "https://hsex.tv";
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36";
 
+// 固定分类（带去重Key，用于合并多区数据时的去重标志）
 const STATIC_CLASSES = [
   { type_id: "top7_list", type_name: "周榜热门" },
   { type_id: "top_list",  type_name: "月榜热门" },
@@ -19,6 +20,7 @@ const STATIC_CLASSES = [
   { type_id: "long_list", type_name: "10分钟+"   }
 ];
 
+// 搜索词分类（按关键词搜索，返回分页结果）
 const SEARCH_CLASSES = [
   { type_id: "search_熟女", type_name: "熟女" },
   { type_id: "search_足疗", type_name: "足疗" }
@@ -33,7 +35,7 @@ function getSafeCacheKey(prefix, key) {
 
 async function httpGet(path) {
   try {
-    const url = path.startsWith("http") ? path : `${HOST}/${path.startsWith("/") ? "" : ""}${path}`;
+    const url = path.startsWith("http") ? path : `${HOST}${path}`;
     const resp = await OmniBox.request(url, {
       headers: { "User-Agent": UA, "Referer": `${HOST}/` },
       timeout: 8000
@@ -44,6 +46,7 @@ async function httpGet(path) {
   }
 }
 
+// 核心列表解析：自动去重 + 兼容style背景图
 function parseList(html, seenIds = new Set()) {
   if (!html) return [];
   const $ = cheerio.load(html);
@@ -82,8 +85,20 @@ function parseList(html, seenIds = new Set()) {
 }
 
 async function home() {
+  // 首页只取周榜、月榜、5分钟+、10分钟+ 各第一页
+  // 不合并，只返回分类入口
+  // 注意：页面"最热"+"最新"两个区域各有24个thumb，存在大量重复ID，
+  // home()返回空list避免重复，由各分类入口提供干净数据
   return { class: ALL_CLASSES, list: [] };
 }
+
+// 静态分类（top7/top/5min/long）
+const STATIC_PAGECOUNT = {
+  top7_list: 10,
+  top_list: 20,
+  "5min_list": 3489,
+  long_list: 3950
+};
 
 async function categoryStatic(tid, pg) {
   const cacheKey = getSafeCacheKey("hs_cat", `${tid}_${pg}`);
@@ -96,7 +111,8 @@ async function categoryStatic(tid, pg) {
   const html = await httpGet(path);
   const list = parseList(html);
 
-  const result = { list, page: pg, pagecount: pg + 1 };
+  const pagecount = STATIC_PAGECOUNT[tid] || 10;
+  const result = { list, page: pg, pagecount };
 
   if (list.length > 0) {
     await OmniBox.setCache(cacheKey, JSON.stringify(result), 600);
@@ -104,7 +120,9 @@ async function categoryStatic(tid, pg) {
   return result;
 }
 
+// 搜索词分类（熟女、足疗）
 async function categorySearch(tid, pg) {
+  // tid 格式: search_熟女 → 提取关键词
   const keyword = decodeURIComponent(tid.replace("search_", ""));
   const cacheKey = getSafeCacheKey("hs_tag", `${keyword}_${pg}`);
   const cached = await OmniBox.getCache(cacheKey);
@@ -112,11 +130,20 @@ async function categorySearch(tid, pg) {
     try { return JSON.parse(cached); } catch (e) {}
   }
 
-  const path = `/search.htm?search=${encodeURIComponent(keyword)}&sort=new&page=${pg}`;
+  // 搜索结果页 URL 格式: /search-N.htm?search=...&sort=new&page=1
+  const path = `/search-${pg}.htm?search=${encodeURIComponent(keyword)}&sort=new&page=1`;
   const html = await httpGet(path);
   const list = parseList(html);
 
-  const result = { list, page: pg, pagecount: pg + 1 };
+  // 从分页导航中解析总页数（最后一页链接如 search-1354.htm）
+  let pagecount = pg + 1;
+  const allMatches = [...html.matchAll(/search-(\d+)\.htm\?search=/g)];
+  if (allMatches.length > 0) {
+    const nums = allMatches.map(m => parseInt(m[1], 10));
+    pagecount = Math.max(...nums);
+  }
+
+  const result = { list, page: pg, pagecount };
 
   if (list.length > 0) {
     await OmniBox.setCache(cacheKey, JSON.stringify(result), 300);
@@ -125,7 +152,7 @@ async function categorySearch(tid, pg) {
 }
 
 async function category(params) {
-  const tid = (params.t || params.categoryId || params.id || "list").toString();
+  const tid = (params.tid || params.t || params.categoryId || params.id || "list").toString();
   const pg = Math.max(1, parseInt(params.pg || params.page || 1));
 
   if (/^\d+$/.test(tid)) return detail({ id: tid });
