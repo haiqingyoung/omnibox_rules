@@ -4,6 +4,8 @@
 // - v1.0.0: 初始版本
 // @downloadURL https://github.com/your-repo/hentaiworld.tv.js
 // @dependencies cheerio
+// @downloadURL https://raw.githubusercontent.com/GD2021/omnibox_rules/refs/heads/main/NEW/hentaiworld.js
+
 
 const OmniBox = require("omnibox_sdk");
 const cheerio = require("cheerio");
