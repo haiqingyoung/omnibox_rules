@@ -3,7 +3,7 @@
 // @description OmniBox 影视爬虫 - MemoJav JAV 站点，支持分类/最佳/最新
 // @indexs 0
 // @dependencies cheerio
-// @downloadURL https://raw.githubusercontent.com/GD2021/omnibox_rules/refs/heads/main/NEW/memojav.js
+// @downloadURL https://raw.githubusercontent.com/GD2021/omnibox_rules/refs/heads/main/NEW/MemoJav.js
 // ========================================
 // @changelog
 // v2.3.0 (2026-04-14) - 全面修复：@indexs 0；演员名空格合并；去掉无意义video分类；play直连m3u8
