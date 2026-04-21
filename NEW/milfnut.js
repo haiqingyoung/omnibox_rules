@@ -5,7 +5,7 @@
 // - v1.0.2 (2026-04-21) 修复列表封面图：优先 data-lazy-src/source[lazy-srcset]，兼容 lazy-load 和直连两种模式
 // - v1.0.1 (2026-04-21) 修复 play() base64 解码：tag 参数需二次 URL decode
 // - v1.0.0 (2026-04-21) 初始版本
-// @downloadURL https://milfnut.com
+// @downloadURL https://raw.githubusercontent.com/GD2021/omnibox_rules/refs/heads/main/NEW/milfnut.js
 // @dependencies cheerio
 
 const OmniBox = require("omnibox_sdk");
